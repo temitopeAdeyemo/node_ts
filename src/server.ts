@@ -5,6 +5,8 @@ import chalk from 'chalk';
 import mongoose from 'mongoose';
 import { config } from './config/config';
 import Logging from './library/logging';
+import authorRoutes from "./routes/author.router"
+import bookRoutes from './routes/book.router';
 const app = express();
 const connectDb = async () => {
     try {
@@ -45,11 +47,12 @@ const startServer = () => {
         }
         next();
     });
-    //Router
-
+    //Routes
+    app.use("/api/v1", authorRoutes)
+    app.use('/api/v1', bookRoutes);
     //Base Url
     app.get("/", (req, res, next)=>{
-        res.status(201).send("Hiya!!!")
+        res.status(200).send("Hiya!!!")
     })
 
     app.use((req, res, next)=>{
